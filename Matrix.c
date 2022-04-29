@@ -25,25 +25,56 @@ bool inputCheck(int input1, int input2){
 
 
 void mainMenu(){
-    const width = 62;
 
-    char c[] = "Hey. Welcome to the Matrix calculator. This calculator will\n"
-               "perform calcuations that deal with Matrix manipulation.\n"
-               "This calculator is built on C and was built by Kevin Raj\n";
-               
-    for(int i = 0; i < width; i++)
-        printf("*");
-    
-    for(int i = 0; i <= width; i++) {
-        if(i == 0) {
-            printf("*  ");
-        } else if (i == width) {
-            /* code */
+    const int width = 67;
+
+    for(int i = 0; i < 35; i++)
+         printf("- ");
+
+    printf("\n");   
+
+    char c1[] = "\nHey. Welcome to the Matrix calculator. This calculator will\n"
+                "deal with calculations that are performed on matrices\n"
+                "You may pick one of the following operations to perform.\n"
+                "\n(1) Scale a Matrix\n"
+                "(2) Add 2 Matrices\n"
+                "(3) Subtract 2 Matrices\n"
+                "(4) Multiply 2 Matrices\n\n";
+
+
+    int j = 0;
+    for(int i = 0; i < 10; i++){
+        printf("*    ");
+        int counter = 3;
+
+        for(; j < sizeof(c1); j++){
+            if(c1[j] == '\n'){
+                j++;
+                break;
+            }
+            printf("%c", c1[j]);
+            counter++;
         }
-        
+
+        for(int k = counter; k < width-1; k++){
+            printf(" ");
+        }
+        printf("*\n");
     }
 
+    for(int i = 0; i < 35; i++)
+            printf("- ");
+
+    printf("\n\n");
+
+    int selection;
+    printf("$ Input Selection(1-4): ");
+    scanf("%d", &selection);
+
+    
+
 }
+
 
 int main(int argc, char *argv[]) {
 
@@ -55,8 +86,10 @@ int main(int argc, char *argv[]) {
     int col = atoi(argv[2]);
 
     if(!inputCheck(row, col)) { exit(1); }
-    
-    int matrix[row][col];
+
+    mainMenu();
+
+    ///int Matrix[row][col];
 
 }
 
