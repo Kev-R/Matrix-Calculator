@@ -11,17 +11,13 @@
 
 
 int operation;
-
-typedef struct{
-    int row;
-    int col;
-} Matrix;
+int row;
+int col;
 
 void mainMenu();
 bool inputCheck(int input1, int input2);
-Matrix newMatrix(Matrix matrix, int row, int col);
-void scale(Matrix matrix, int factor);
-
+int** populateMatrix(int matrix[row][col]);
+void printMatrix(int matrix[row][col]);
 
 
 
@@ -31,22 +27,22 @@ int main(int argc, char *argv[]) {
         printf("Please use this command format: ./Matrix.c <rows> <columns>\n");
     }
 
-    int row = atoi(argv[1]);
-    int col = atoi(argv[2]);
+    row = atoi(argv[1]);
+    col = atoi(argv[2]);
 
     if(!inputCheck(row, col)) { exit(1); }
 
     mainMenu();
 
-    
 
     switch(operation){
         case 1:
-            // Scaling method call
-            Matrix matrix = newMatrix(matrix, row, col);
+        {   // Scaling method call
+            int matrix[row][col];
             populateMatrix(matrix);
-
+            printMatrix(matrix);
             break;
+        }    
         case 2:
             // Adding method call and get second matrix
             break;
@@ -63,38 +59,60 @@ int main(int argc, char *argv[]) {
 
 
 
+int** populateMatrix(int matrix[row][col]){
 
-Matrix newMatrix(Matrix matrix, int row, int col){
-    matrix.row = row;
-    matrix.col = col;
+    char letter=65;
 
-    int arr[row][col];
 
-    matrix = arr;
+    printf("\nBelow is a template of the matrix. We need to populate it.\n\n");
+
+
+    printf("    ");
+
+    for(int i = 0; i < row; i++){
+            printf("%c   ", letter+i);
+    }
+
+    letter = 65;
+    printf("\n");
+
+    for(int j = 0; j < col; j++){
+        printf("%d ",j+1);
+        printf("| ");
+
+        for(int k = 0; k < row; k++){
+            printf("%c%d  ", letter+k,j+1);
+        }
+
+        printf("|\n");
+        
+    }
+
+    printf("\n");
+
+    letter = 65;
+    
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            printf("%c%d: ",letter+i, j+1);
+            scanf("%d", &matrix[i][j]);
+        }
+    }
 
     return matrix;
 }
 
 
-Matrix populateMatrix(Matrix matrix){
+void printMatrix(int matrix[row][col]){
 
-    printf("  ");
-    for(int i = 1; i <= 3; i++){
-        printf("%d  ", i);
-    }
-
-}
-
-
-
-void scale(Matrix matrix, int factor){
-    for(int i = 0; i < matrix.row; i++){
-        for(int j = 0; j < matrix.col; j++){
-            matrix.array[i][j] = factor * matrix.array[i][j];
+    for(int i = 0; i < row; i++){
+        printf("| ");
+        for(int j = 0; j < col; j++){
+            printf("%d ", matrix[i][j]);
         }
+        printf("|\n");
     }
 }
-
 
 
 
@@ -108,9 +126,28 @@ bool inputCheck(int input1, int input2){
         printf("Input 2 is %d. Please input non-zero positive command line arguements.\n", input2);
         return false;    
     }
+    if(input1 >=10){
+        printf("Input 1 is greater than the max length 10. Please input a length less than 10");
+        return false;
+    }
+    if(input2 >=10){
+        printf("Input 2 is greater than the max length 10. Please input a length less than 10");
+        return false;
+    }
+
     return true;
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
