@@ -8,6 +8,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
+//#include<graphics.h>
+// add graphics.h
 
 
 int operation;
@@ -18,7 +20,12 @@ void mainMenu();
 bool inputCheck(int input1, int input2);
 int** populateMatrix(int matrix[row][col]);
 void printMatrix(int matrix[row][col]);
-
+int** scale(int matrix[row][col], int factor);
+int numberOfDigits(int num);
+void cp();
+void white();
+void bold();
+void noBold();
 
 
 int main(int argc, char *argv[]) {
@@ -40,7 +47,29 @@ int main(int argc, char *argv[]) {
         {   // Scaling method call
             int matrix[row][col];
             populateMatrix(matrix);
+
+            bold();
+            printf("\nThis is the Matrix you inputed\n\n");
+            noBold();
+
             printMatrix(matrix);
+
+            printf("\n\n");
+            cp();
+            printf("Please input the scale factor: ");
+            white();
+
+            int scalar;
+            scanf("%d", &scalar);
+
+            bold();
+            printf("\nThis is your Scaled Matrix\n\n");
+            noBold();
+
+            scale(matrix, scalar);
+            printMatrix(matrix);
+            
+
             break;
         }    
         case 2:
@@ -59,18 +88,36 @@ int main(int argc, char *argv[]) {
 
 
 
+void cp(){
+    printf("\033[0;34m");
+    printf("$  ");
+    printf("\033[0;32m");
+}
+
+void white(){
+    printf("\033[0;37m");
+}
+
+void bold(){
+    printf("\033[1m");
+}
+
+void noBold(){
+    printf("\033[22m");
+}
+
 int** populateMatrix(int matrix[row][col]){
 
     char letter=65;
 
-
-    printf("\nBelow is a template of the matrix. We need to populate it.\n\n");
-
+    bold();
+    printf("\nTemplate of Matrix\n\n");
+    noBold();
 
     printf("    ");
 
     for(int i = 0; i < row; i++){
-            printf("%c   ", letter+i);
+            printf("%c     ", letter+i);
     }
 
     letter = 65;
@@ -81,7 +128,7 @@ int** populateMatrix(int matrix[row][col]){
         printf("| ");
 
         for(int k = 0; k < row; k++){
-            printf("%c%d  ", letter+k,j+1);
+            printf("%c%d    ", letter+k,j+1);
         }
 
         printf("|\n");
@@ -94,21 +141,32 @@ int** populateMatrix(int matrix[row][col]){
     
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++){
+            cp();
             printf("%c%d: ",letter+i, j+1);
+            white();
             scanf("%d", &matrix[i][j]);
         }
     }
 
+    printf("\n");
     return matrix;
 }
 
 
+
+
+
 void printMatrix(int matrix[row][col]){
 
+    const int MAXSPACES = 6;
+
     for(int i = 0; i < row; i++){
-        printf("| ");
+        printf("|   ");
         for(int j = 0; j < col; j++){
-            printf("%d ", matrix[i][j]);
+            printf("%d", matrix[i][j]);
+            for(int k = 0; k < (MAXSPACES - numberOfDigits(matrix[i][j])); k++){
+                printf(" ");
+            }
         }
         printf("|\n");
     }
@@ -116,21 +174,53 @@ void printMatrix(int matrix[row][col]){
 
 
 
+
+int** scale(int matrix[row][col], int factor){
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            matrix[i][j] = factor*matrix[i][j];
+        }
+    }
+
+    return matrix;
+}
+
+
+
+
+int numberOfDigits(int num){
+    int count = 0;
+
+    while(num != 0){
+        num = num/10;
+        count++;
+    }
+
+    return count;
+}
+
+
+
+
 bool inputCheck(int input1, int input2){
 
     if(input1 <= 0) {
+        cp();
         printf("Input 1 is %d. Please input non-zero positive command line arguements.\n", input1);
         return false;
     }
     if(input2 <= 0) {
+        cp();
         printf("Input 2 is %d. Please input non-zero positive command line arguements.\n", input2);
         return false;    
     }
     if(input1 >=10){
+        cp();
         printf("Input 1 is greater than the max length 10. Please input a length less than 10");
         return false;
     }
     if(input2 >=10){
+        cp();
         printf("Input 2 is greater than the max length 10. Please input a length less than 10");
         return false;
     }
@@ -138,13 +228,6 @@ bool inputCheck(int input1, int input2){
     return true;
 
 }
-
-
-
-
-
-
-
 
 
 
@@ -197,7 +280,9 @@ void mainMenu(){
 
     
     do {
-        printf("$ Input Selection(1-4): ");
+        cp();
+        printf("Input Selection(1-4): ");
+        white();
         scanf("%d", &operation);
     } while(!(operation >= 1 && operation <= 4));
     
