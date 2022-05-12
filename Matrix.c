@@ -21,6 +21,7 @@ bool inputCheck(int input1, int input2);
 int** populateMatrix(int matrix[row][col]);
 void printMatrix(int matrix[row][col]);
 int** scale(int matrix[row][col], int factor);
+int** add(int matrix1[row][col], int matrix2[row][col]);
 int numberOfDigits(int num);
 void cp();
 void white();
@@ -73,9 +74,34 @@ int main(int argc, char *argv[]) {
             break;
         }    
         case 2:
+        {
             // Adding method call and get second matrix
+
+            printf("\n\nPlease input values for the first matrix");
+            int matrix1[row][col];
+            populateMatrix(matrix1);
+
+            printf("Please input values for the second matrix");
+            int matrix2[row][col];
+            populateMatrix(matrix2);
+
+            printMatrix(add(matrix1, matrix2));
+
             break;
+        }
+            
         case 3:
+        {
+            printf("\n\nPlease input values for the first matrix");
+            int matrix1[row][col];
+            populateMatrix(matrix1);
+
+            printf("Please input values for the second matrix");
+            int matrix2[row][col];
+            populateMatrix(matrix2);
+
+            printMatrix(add(matrix1, scale(matrix2,-1)));
+        }
             // Subtract method call and get second matrix
             break;
         case 4:
@@ -172,6 +198,20 @@ void printMatrix(int matrix[row][col]){
     }
 }
 
+
+
+int** add(int matrix1[row][col], int matrix2[row][col]){
+
+    int result[row][col];
+
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j ++){
+            result[i][j] = matrix1[i][j] + matrix2[i][j];
+        }
+    }
+
+    return result;
+}
 
 
 
