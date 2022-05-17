@@ -15,13 +15,16 @@
 int operation;
 int row;
 int col;
+int row2;
+int col2;
 
 void mainMenu();
 bool inputCheck(int input1, int input2);
 int** populateMatrix(int matrix[row][col]);
-void printMatrix(int matrix[row][col]);
+void printMatrix(int matrix[row][col], int select);
 int** scale(int matrix[row][col], int factor);
 int** add(int matrix1[row][col], int matrix2[row][col]);
+int** multiply(int matrix1[row][col], int matrix2[col][col2]);
 int numberOfDigits(int num);
 void cp();
 void white();
@@ -53,7 +56,7 @@ int main(int argc, char *argv[]) {
             printf("\nThis is the Matrix you inputed\n\n");
             noBold();
 
-            printMatrix(matrix);
+            printMatrix(matrix,1);
 
             printf("\n\n");
             cp();
@@ -68,7 +71,7 @@ int main(int argc, char *argv[]) {
             noBold();
 
             scale(matrix, scalar);
-            printMatrix(matrix);
+            printMatrix(matrix,1);
             
 
             break;
@@ -77,62 +80,190 @@ int main(int argc, char *argv[]) {
         {
             // Adding method call and get second matrix
 
+            cp();
             printf("\n\nPlease input values for the first matrix");
+            white();
+
             int matrix1[row][col];
             populateMatrix(matrix1);
 
+            cp();
             printf("Please input values for the second matrix");
+            white();
+
             int matrix2[row][col];
             populateMatrix(matrix2);
 
-            printMatrix(add(matrix1, matrix2));
+            printMatrix(add(matrix1, matrix2),1);
 
             break;
         }
             
         case 3:
         {
+            cp();
             printf("\n\nPlease input values for the first matrix");
+            white();
+
+
             int matrix1[row][col];
             populateMatrix(matrix1);
 
+            cp();
             printf("Please input values for the second matrix");
+            white();
+
+
             int matrix2[row][col];
             populateMatrix(matrix2);
 
-            printMatrix(add(matrix1, scale(matrix2,-1)));
+            printMatrix(add(matrix1, scale(matrix2,-1)),1);
         }
             // Subtract method call and get second matrix
             break;
         case 4:
+        {
             // Multiply method call and get second matrix
+            cp();
+            printf("\n\nPlease input values for the first matrix");
+            white();
+
+            int matrix1[row][col];
+            populateMatrix(matrix1);
+
+            cp();
+            printf("Col dimension of Second Matrix: ");
+            white();
+            scanf("%d", &col2);
+            
+
+
+
+
+            int matrix2[col][col2];
+
+            int rown = col;
+            int coln = col2;
+
+
+            char letter=65;
+
+            bold();
+            printf("\nTemplate of Matrix\n\n");
+            noBold();
+
+            printf("    ");
+
+            for(int i = 0; i < coln; i++){
+                    printf("%c     ", letter+i);
+            }
+
+            letter = 65;
+            printf("\n");
+
+            for(int j = 0; j < rown; j++){
+                printf("%d ",j+1);
+                printf("| "); 
+
+                for(int k = 0; k < coln; k++){
+                    printf("%c%d    ", letter+k,j+1);
+                }
+
+                printf("|\n");
+                
+            }
+
+            printf("\n");
+
+            letter = 65;
+            
+            for(int i = 0; i < rown; i++){
+                for(int j = 0; j < coln; j++){
+                    cp();
+                    printf("%c%d: ",letter+j, i+1);
+                    white();
+                    scanf("%d", &matrix2[i][j]);
+                }
+            }
+            
+
+            printf("\n\n");
+
+
+            bold();
+            printf("Result of Matrix Multiplication\n\n");
+            noBold();
+
+            printMatrix(multiply(matrix1, matrix2),2);
+
+
             break;
+        }
+            
     }
 
 }
 
 
 
+int** multiply(int matrix1[row][col], int matrix2[col][col2]){
+    
+    int result[row][col2];
+    int sum = 0;
 
-void cp(){
-    printf("\033[0;34m");
-    printf("$  ");
-    printf("\033[0;32m");
+    for(int i = 0; i < row; i++){
+        for(int k = 0; k < col2; k++){
+            for(int j = 0; j < col; j++){
+
+                sum += (matrix1[i][j] * matrix2[j][k]);
+                
+            }
+
+            result[i][k] = sum;
+            sum = 0;
+        }
+        
+    }
+
+    return result;
+
 }
 
-void white(){
-    printf("\033[0;37m");
+
+
+
+void printMatrix(int matrix[row][col], int select){
+
+    int temp1 = row;
+    int temp2 = col;
+
+    if(select == 2){
+        row = col;
+        col = col2;
+    }
+
+    const int MAXSPACES = 6;
+
+    for(int i = 0; i < row; i++){
+        printf("|   ");
+        for(int j = 0; j < col; j++){
+            printf("%d",matrix[i][j]);
+            for(int k = 0; k < (MAXSPACES - numberOfDigits(matrix[i][j])); k++){
+                printf(" ");
+            }
+        }
+        printf("|\n");
+    }
+    row = temp1;
+    col = temp2;
 }
 
-void bold(){
-    printf("\033[1m");
-}
 
-void noBold(){
-    printf("\033[22m");
-}
+
 
 int** populateMatrix(int matrix[row][col]){
+
+    
 
     char letter=65;
 
@@ -142,18 +273,18 @@ int** populateMatrix(int matrix[row][col]){
 
     printf("    ");
 
-    for(int i = 0; i < row; i++){
+    for(int i = 0; i < col; i++){
             printf("%c     ", letter+i);
     }
 
     letter = 65;
     printf("\n");
 
-    for(int j = 0; j < col; j++){
+    for(int j = 0; j < row; j++){
         printf("%d ",j+1);
-        printf("| ");
+        printf("| "); 
 
-        for(int k = 0; k < row; k++){
+        for(int k = 0; k < col; k++){
             printf("%c%d    ", letter+k,j+1);
         }
 
@@ -168,7 +299,7 @@ int** populateMatrix(int matrix[row][col]){
     for(int i = 0; i < row; i++){
         for(int j = 0; j < col; j++){
             cp();
-            printf("%c%d: ",letter+i, j+1);
+            printf("%c%d: ",letter+j, i+1);
             white();
             scanf("%d", &matrix[i][j]);
         }
@@ -178,25 +309,6 @@ int** populateMatrix(int matrix[row][col]){
     return matrix;
 }
 
-
-
-
-
-void printMatrix(int matrix[row][col]){
-
-    const int MAXSPACES = 6;
-
-    for(int i = 0; i < row; i++){
-        printf("|   ");
-        for(int j = 0; j < col; j++){
-            printf("%d", matrix[i][j]);
-            for(int k = 0; k < (MAXSPACES - numberOfDigits(matrix[i][j])); k++){
-                printf(" ");
-            }
-        }
-        printf("|\n");
-    }
-}
 
 
 
@@ -210,8 +322,17 @@ int** add(int matrix1[row][col], int matrix2[row][col]){
         }
     }
 
+    
     return result;
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -326,5 +447,30 @@ void mainMenu(){
         scanf("%d", &operation);
     } while(!(operation >= 1 && operation <= 4));
     
+}
+
+
+
+
+
+
+
+
+void cp(){
+    printf("\033[0;34m");
+    printf("$  ");
+    printf("\033[0;32m");
+}
+
+void white(){
+    printf("\033[0;37m");
+}
+
+void bold(){
+    printf("\033[1m");
+}
+
+void noBold(){
+    printf("\033[22m");
 }
 
