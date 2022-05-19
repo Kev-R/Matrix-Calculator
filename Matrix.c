@@ -225,6 +225,43 @@ int main(int argc, char *argv[]) {
 
 
 
+
+
+
+// ------------------------------------ Operational Methods -----------------------------------------//
+
+
+int** scale(int matrix[row][col], int factor){
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            matrix[i][j] = factor*matrix[i][j];
+        }
+    }
+
+    return matrix;
+}
+
+
+
+
+int** add(int matrix1[row][col], int matrix2[row][col]){
+
+    int result[row][col];
+
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j ++){
+            result[i][j] = matrix1[i][j] + matrix2[i][j];
+        }
+    }
+
+    
+    return result;
+}
+
+
+
+
+
 int** multiply(int matrix1[row][col], int matrix2[col][col2]){
     
     int result[row][col2];
@@ -249,6 +286,14 @@ int** multiply(int matrix1[row][col], int matrix2[col][col2]){
 }
 
 
+
+
+
+
+
+// ------------------------------ Printing and Populating -------------------------------------//
+
+
 void printMatrixMultiply(int matrix[row][col2]){
 
     const int MAXSPACES = 7;
@@ -258,14 +303,7 @@ void printMatrixMultiply(int matrix[row][col2]){
         printf("|    ");
         for(int j = 0; j < col2; j++){
             printf("%d",matrix[i][j]);
-
-            cond = (MAXSPACES - numberOfDigits(matrix[i][j]));
-            if(cond == 6){
-                cond = cond - 1;
-            }
-            
-
-            for(int k = 0; k < cond; k++){
+            for(int k = 0; k < (MAXSPACES - numberOfDigits(matrix[i][j])); k++){
                 printf(" ");
             }
         }
@@ -287,13 +325,7 @@ void printMatrix(int matrix[row][col]){
         printf("|    ");
         for(int j = 0; j < col; j++){
             printf("%d",matrix[i][j]);
-
-            cond = (MAXSPACES - numberOfDigits(matrix[i][j]));
-            if(cond == 6){
-                cond = cond - 1;
-            }
-
-            for(int k = 0; k < cond; k++){
+            for(int k = 0; k < (MAXSPACES - numberOfDigits(matrix[i][j])); k++){
                 printf(" ");
             }
         }
@@ -312,13 +344,7 @@ void printMatrixV2(int matrix[col][col2]){
         printf("|    ");
         for(int j = 0; j < col2; j++){
             printf("%d",matrix[i][j]);
-
-            cond = (MAXSPACES - numberOfDigits(matrix[i][j]));
-            if(cond == 6){
-                cond = cond - 1;
-            }
-
-            for(int k = 0; k < cond; k++){
+            for(int k = 0; k < (MAXSPACES - numberOfDigits(matrix[i][j])); k++){
                 printf(" ");
             }
         }
@@ -380,32 +406,10 @@ int** populateMatrix(int matrix[row][col]){
 
 
 
-int** add(int matrix1[row][col], int matrix2[row][col]){
-
-    int result[row][col];
-
-    for(int i = 0; i < row; i++){
-        for(int j = 0; j < col; j ++){
-            result[i][j] = matrix1[i][j] + matrix2[i][j];
-        }
-    }
-
-    
-    return result;
-}
 
 
 
-int** scale(int matrix[row][col], int factor){
-    for(int i = 0; i < row; i++){
-        for(int j = 0; j < col; j++){
-            matrix[i][j] = factor*matrix[i][j];
-        }
-    }
-
-    return matrix;
-}
-
+// ------------------------------- Other helper methods ----------------------------- //
 
 
 
@@ -416,6 +420,9 @@ int numberOfDigits(int num){
         num = num/10;
         count++;
     }
+
+    if(count == 0)
+        count = 1;
 
     return count;
 }
@@ -505,10 +512,6 @@ void mainMenu(){
     } while(!(operation >= 1 && operation <= 4));
     
 }
-
-
-
-
 
 
 
