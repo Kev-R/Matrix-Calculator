@@ -1,23 +1,26 @@
 /*
     Matrix Calculator Project
     @creator: Kevin Raj
-    @date: April 26, 2021
+    @date: May 19, 2022
 */
 
+
+// ------------- Libraries --------------- //
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
-//#include<graphics.h>
-// add graphics.h
 
 
+// ------------- Vars --------------- //
 int operation;
 int row;
 int col;
 int row2;
 int col2;
 
+
+// ----------------------- Method Signatures --------------------------//
 void mainMenu();
 bool inputCheck(int input1, int input2);
 int** populateMatrix(int matrix[row][col]);
@@ -34,6 +37,8 @@ void bold();
 void noBold();
 
 
+// ------------------------------- Main Method ---------------------------------- // 
+
 int main(int argc, char *argv[]) {
 
     if(argc != 3){
@@ -49,8 +54,8 @@ int main(int argc, char *argv[]) {
 
 
     switch(operation){
-        case 1:
-        {   // Scaling method call
+        case 1: {
+
             int matrix[row][col];
             populateMatrix(matrix);
 
@@ -77,10 +82,8 @@ int main(int argc, char *argv[]) {
             
 
             break;
-        }    
-        case 2:
-        {
-            // Adding method call and get second matrix
+
+        } case 2: {
 
             cp();
             printf("Please input values for the first matrix\n\n");
@@ -99,10 +102,9 @@ int main(int argc, char *argv[]) {
             printMatrix(add(matrix1, matrix2));
 
             break;
-        }
-            
-        case 3:
-        {
+
+        } case 3: {
+
             cp();
             printf("Please input values for the first matrix\n\n");
             white();
@@ -120,11 +122,10 @@ int main(int argc, char *argv[]) {
             populateMatrix(matrix2);
 
             printMatrix(add(matrix1, scale(matrix2,-1)));
-        }
-            // Subtract method call and get second matrix
+        
             break;
-        case 4:
-        {
+
+        } case 4: {
             // Multiply method call and get second matrix
             cp();
             printf("Please input values for the first matrix\n\n");
@@ -138,10 +139,6 @@ int main(int argc, char *argv[]) {
             white();
             scanf("%d", &col2);
             
-
-
-
-
             int matrix2[col][col2];
 
             int rown = col;
@@ -189,15 +186,10 @@ int main(int argc, char *argv[]) {
             }
             
 
-
-
-            printf("\n\n");
-
             bold();
-            printf("\nMatrix 1\n\n");
+            printf("\n\n\nMatrix 1\n\n");
             noBold();
             printMatrix(matrix1);
-
             printf("\n\n");
 
 
@@ -205,7 +197,6 @@ int main(int argc, char *argv[]) {
             printf("\nMatrix 2\n\n");
             noBold();
             printMatrixV2(matrix2);
-
             printf("\n\n");
 
 
