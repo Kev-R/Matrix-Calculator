@@ -1,6 +1,6 @@
 # Matrix Calculator 
 
-#### Video Demo: 
+#### Video Demo: https://youtu.be/syQ2fEwMpgQ
 #### Description: 
 This Project is programmed in C and is a Calculator that performs Matrix Calculations.
 The main operations this program performs include Scaling, Adding, Subtracting, and Multiplying Matrices. 
