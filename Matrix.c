@@ -77,8 +77,7 @@ int main(int argc, char *argv[]) {
             printf("\nThis is your Scaled Matrix\n\n");
             noBold();
 
-            scale(matrix, scalar);
-            printMatrix(matrix);
+            printMatrix(scale(matrix, scalar));
             
 
             break;
@@ -99,6 +98,24 @@ int main(int argc, char *argv[]) {
             int matrix2[row][col];
             populateMatrix(matrix2);
 
+            bold();
+            printf("\n\n\nMatrix 1\n\n");
+            noBold();
+            printMatrix(matrix1);
+            printf("\n\n");
+
+
+            bold();
+            printf("\nMatrix 2\n\n");
+            noBold();
+            printMatrix(matrix2);
+            printf("\n\n");
+
+
+            
+            bold();
+            printf("\nResultant Matrix\n\n");
+            noBold();
             printMatrix(add(matrix1, matrix2));
 
             break;
@@ -121,6 +138,25 @@ int main(int argc, char *argv[]) {
             int matrix2[row][col];
             populateMatrix(matrix2);
 
+
+            bold();
+            printf("\n\n\nMatrix 1\n\n");
+            noBold();
+            printMatrix(matrix1);
+            printf("\n\n");
+
+
+            bold();
+            printf("\nMatrix 2\n\n");
+            noBold();
+            printMatrix(matrix2);
+            printf("\n\n");
+
+
+            
+            bold();
+            printf("\nResultant Matrix\n\n");
+            noBold();
             printMatrix(add(matrix1, scale(matrix2,-1)));
         
             break;
